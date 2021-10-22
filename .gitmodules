@@ -1,0 +1,3 @@
+[submodule "raspirobotboard3"]
+	path = raspirobotboard3
+	url = git@github.com:simonmonk/raspirobotboard3.git
