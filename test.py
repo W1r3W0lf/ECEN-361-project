@@ -8,8 +8,8 @@ rr = RRB3(6, 6)
 
 while True:
     ret, frame = cap.read()
-    low_b = np.uint8([5,5,5])
-    high_b = np.uint8([0,0,0])
+    low_b = np.uint8([78,158,124])
+    high_b = np.uint8([138,255,255])
     mask = cv2.inRange(frame, high_b, low_b)
     contours, hierarchy = cv2.findContours(mask, 1, cv2.CHAIN_APPROX_NONE)
     if len(contours) > 0 :
