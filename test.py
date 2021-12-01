@@ -4,13 +4,27 @@ sys.path.insert(0, '/home/ali/raspirobotboard3/python')
 from rrb3 import*
 cap = cv2.VideoCapture(0)
 
+
+screen_width = 160
+screen_hight = 120
+
+cap.set(3, screen_width)
+cap.set(4, screen_hight)
+
+# How large should each turn zone be valid values 0 to 0.5
+turn_zone_size = 0.33
+
+right_zone = screen_width * turn_zone_size
+left_zone = screen_width * (1-turn_zone_size)
+
 rr = RRB3(6, 6)
 
 while True:
     ret, frame = cap.read()
-    low_b = np.uint8([85,60,30])
-    high_b = np.uint8([255,190,100])
-    mask = cv2.inRange(frame, high_b, low_b)
+    hsv = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
+    low_b = np.uint8([0,70,70])
+    high_b = np.uint8([60,255,255])
+    mask = cv2.inRange(hsv, low_b, high_b)
     contours, hierarchy = cv2.findContours(mask, 1, cv2.CHAIN_APPROX_NONE)
     if len(contours) > 0 :
         c = max(contours, key=cv2.contourArea)
