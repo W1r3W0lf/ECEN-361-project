@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
-sys.path.insert(0, '/home/ali/raspirobotboard3/python')
+import sys
+sys.path.insert(0, './raspirobotboard3/python')
 from rrb3 import*
 cap = cv2.VideoCapture(0)
 
@@ -33,15 +34,15 @@ while True:
             cx = int(M['m10']/M['m00'])
             cy = int(M['m01']/M['m00'])
             print("CX : "+str(cx)+"  CY : "+str(cy))
-            if cx >= 120 :
+            if cx >= left_zone : # 120
                 print("Turn Left")
                 rr.set_motors(1, 0, 1, 0)
-            if cx < 120 and cx > 40 :
-                print("On Track!")
-                rr.set_motors(0, 0, 1, 0)
-            if cx <=40 :
+            elif cx <= right_zone : #40
                 print("Turn Right")
                 rr.set_motors(1, 1, 1, 0)
+            else:
+                print("On Track!")
+                rr.set_motors(0, 0, 1, 0)
             cv2.circle(frame, (cx,cy), 5, (255,255,255), -1)
     else :
         print("I don't see the line")
